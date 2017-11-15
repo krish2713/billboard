@@ -8,18 +8,18 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
-import com.altmedia.billboard.entity.Hoarding;
-import com.altmedia.billboard.service.HoardingService;
+import com.altmedia.billboard.entity.BillBoard;
+import com.altmedia.billboard.service.BillBoardService;
 
-@Path("hoarding")
-public class HoardingResource {
-	private HoardingService service;
+@Path("billboard")
+public class BillBoardResource {
+	private BillBoardService service;
 
 	@Path("create")
 	@POST
 	@Consumes("application/json")
-	public Response create(Hoarding hoarding) {
-		service.create(hoarding);
+	public Response create(BillBoard billBoard) {
+		service.create(billBoard);
 		return Response.ok().build();
 	}
 

@@ -1,5 +1,5 @@
 package com.altmedia.billboard.entity;
 
-public class FixedBid extends Listing {
+public class FixedPriceBid extends Bid {
 
 }

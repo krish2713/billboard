@@ -1,15 +1,25 @@
 package com.altmedia.billboard.entity;
 
+import java.util.Date;
+
 public class Auction extends Listing {
+	private Date startDate;
+	private Date endDate;
 
-	private int bidPrice;
-
-	public int getBidPrice() {
-		return bidPrice;
+	public Date getStartDate() {
+		return startDate;
 	}
 
-	public void setBidPrice(int bidPrice) {
-		this.bidPrice = bidPrice;
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
 	}
 
 }

@@ -3,36 +3,39 @@ package com.altmedia.billboard.entity;
 import java.util.Date;
 
 public abstract class Listing {
-	private String hoardingId;
-	private String specialInstructions;
-	private int priority;
-	private User createdBy;
+	private String billBoardId;
+	private String id;
+	private Date from;
+	private Date to;
+	private int minimumPeriod;
+	private int pricePerMonth;
+	private String createdById;
 	private String modifiedById;
 	private Date createdDate;
 	private Date modifiedDate;
 
-	public String getHoardingId() {
-		return hoardingId;
+	public String getId() {
+		return id;
 	}
 
-	public String getSpecialInstructions() {
-		return specialInstructions;
+	public Date getFrom() {
+		return from;
 	}
 
-	public void setHoardingId(String hoardingId) {
-		this.hoardingId = hoardingId;
+	public Date getTo() {
+		return to;
 	}
 
-	public void setSpecialInstructions(String specialInstructions) {
-		this.specialInstructions = specialInstructions;
+	public int getMinimumPeriod() {
+		return minimumPeriod;
 	}
 
-	public void setPriority(int priority) {
-		this.priority = priority;
+	public int getPricePerMonth() {
+		return pricePerMonth;
 	}
 
-	public int getPriority() {
-		return priority;
+	public String getCreatedById() {
+		return createdById;
 	}
 
 	public String getModifiedById() {
@@ -47,6 +50,30 @@ public abstract class Listing {
 		return modifiedDate;
 	}
 
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public void setFrom(Date from) {
+		this.from = from;
+	}
+
+	public void setTo(Date to) {
+		this.to = to;
+	}
+
+	public void setMinimumPeriod(int minimumPeriod) {
+		this.minimumPeriod = minimumPeriod;
+	}
+
+	public void setPricePerMonth(int pricePerMonth) {
+		this.pricePerMonth = pricePerMonth;
+	}
+
+	public void setCreatedById(String createdById) {
+		this.createdById = createdById;
+	}
+
 	public void setModifiedById(String modifiedById) {
 		this.modifiedById = modifiedById;
 	}
@@ -59,12 +86,11 @@ public abstract class Listing {
 		this.modifiedDate = modifiedDate;
 	}
 
-	public User getCreatedBy() {
-		return createdBy;
+	public String getBillBoardId() {
+		return billBoardId;
 	}
 
-	public void setCreatedBy(User createdBy) {
-		this.createdBy = createdBy;
+	public void setBillBoardId(String billBoardId) {
+		this.billBoardId = billBoardId;
 	}
-
 }

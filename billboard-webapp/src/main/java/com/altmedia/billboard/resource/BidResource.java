@@ -40,13 +40,8 @@ public class BidResource {
 
 	@GET
 	@Produces("application/json")
-	public Response getAllByHoardingId(@PathParam("hoardingId") String hoardingId) {
+	public Response getBidsForListing(@PathParam("listingId") String listingId) {
 		return null;
 	}
 
-	@GET
-	@Produces("application/json")
-	public Response getAllListings() {
-		return null;
-	}
 }

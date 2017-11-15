@@ -1,6 +1,6 @@
 package com.altmedia.billboard.entity;
 
-public class User {
+public class UserInfo {
 	private String fName;
 	private String lName;
 	private String emailAddress;
