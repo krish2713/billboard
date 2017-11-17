@@ -2,33 +2,41 @@ package com.altmedia.billboard.entity;
 
 import java.util.List;
 
-public class Hoarding extends BillBoard{
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
+
+public class Hoarding extends BillBoard {
 	private Address address;
 	private int size;
 	private List<String> imageUrls;
 
+	@DynamoDBAttribute(attributeName = "Address")
 	public Address getAddress() {
 		return address;
 	}
 
+	@DynamoDBAttribute(attributeName = "Size")
 	public int getSize() {
 		return size;
 	}
 
+	@DynamoDBAttribute(attributeName = "ImageUrls")
 	public List<String> getImageUrls() {
 		return imageUrls;
 	}
 
-	public void setAddress(Address address) {
+	public Hoarding setAddress(Address address) {
 		this.address = address;
+		return this;
 	}
 
-	public void setSize(int size) {
+	public Hoarding setSize(int size) {
 		this.size = size;
+		return this;
 	}
 
-	public void setImageUrls(List<String> imageUrls) {
+	public Hoarding setImageUrls(List<String> imageUrls) {
 		this.imageUrls = imageUrls;
+		return this;
 	}
 
 }
