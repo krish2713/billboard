@@ -1,6 +1,5 @@
 package com.altmedia.billboard.resource;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.List;
@@ -27,7 +26,7 @@ import com.altmedia.billboard.service.ListingService;
 
 @Path("listing")
 public class ListingResource {
-    private ListingService listingService;
+    private ListingService listingService = new ListingService();
 
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
@@ -44,7 +43,7 @@ public class ListingResource {
             listingService.create(listing);
             return Response.ok().build();
         }
-        catch (IOException e) {
+        catch (Throwable e) {
             e.printStackTrace();
         }
         return Response.serverError().build();
@@ -72,11 +71,19 @@ public class ListingResource {
         return Response.ok().entity(listing).build();
     }
 
+    @Path("user/{userId}")
     @GET
     @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllByUserId(@QueryParam("userId") String userId) {
         List<Listing> listings = listingService.getListingsByUserId(userId);
         return Response.ok().entity(listings).build();
+    }
+
+    @Path("ping")
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response ping() {
+        return Response.ok().entity("hello user!").build();
     }
 }

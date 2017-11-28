@@ -49,6 +49,7 @@ public class BidResource {
         return Response.ok().entity(bid).build();
     }
 
+    @Path("listing/{listingId}")
     @GET
     @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.APPLICATION_JSON)

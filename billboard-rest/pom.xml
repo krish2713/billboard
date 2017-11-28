@@ -63,10 +63,10 @@
 					<descriptorRefs>
 						<descriptorRef>jar-with-dependencies</descriptorRef>
 					</descriptorRefs>
-					<finalName>simple-service-${project.version}</finalName>
+					<finalName>billboard-rest-${project.version}</finalName>
 					<archive>
 						<manifest>
-							<mainClass>com.example.rest.Main</mainClass>
+							<mainClass>com.altmedia.billboard.Main</mainClass>
 						</manifest>
 					</archive>
 				</configuration>

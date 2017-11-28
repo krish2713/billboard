@@ -4,16 +4,18 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 import junit.framework.Assert;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
-import com.altmedia.billboard.entity.Address;
-import com.altmedia.billboard.entity.Listing;
-import com.altmedia.billboard.service.ListingService;
+import com.altmedia.billboard.entity.Bid;
+import com.altmedia.billboard.entity.UserInfo;
+import com.altmedia.billboard.service.BidService;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.amazonaws.services.dynamodbv2.document.DynamoDB;
@@ -24,11 +26,12 @@ import com.amazonaws.services.dynamodbv2.model.KeyType;
 import com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput;
 import com.amazonaws.services.dynamodbv2.model.ScalarAttributeType;
 
-public class ListingCRUDTest {
+@Ignore
+public class BidCRUDTest {
 
     private static DynamoDB dynamoDB;
-    private static String tableName = "Listing";
-    private ListingService service = new ListingService();
+    private static String tableName = "Bid";
+    private BidService service = new BidService();
 
     @BeforeClass
     public static void createTable() {
@@ -55,17 +58,22 @@ public class ListingCRUDTest {
 
     @Test
     public void testCRUDOperations() throws ParseException {
-
-        Listing listing = new Listing();
-        listing.setId("601").setCreatedById("kck").setCreatedDate(new Date()).setType("Auction")
-                .setAddress(new Address()).setMinimumPeriod(12).setFromDate(new Date("01/12/2017"))
-                .setToDate(new Date("31/12/2017")).setPricePerMonth(100).setSize(100);
+        Bid bid = new Bid();
+        UserInfo info = new UserInfo();
+        info.setFirstName("fn").setLastName("ln").setEmailAddress("a@b.c").setPhone("444");
+        bid.setType("AuctionBid").setCreatedById("kck").setCreatedDate(new Date()).setListingId("124").setPriority(1)
+                .setUserInfo(info);
 
         // Save the item (book).
-        service.create(listing);
+        service.create(bid);
+
+        List<Bid> bids = service.getAllBidsForListing("124");
+        Assert.assertEquals(1, bids.size());
+
+        String bidId = bids.get(0).getId();
 
         // Retrieve the item.
-        Listing itemRetrieved = service.retrieve("601");
+        Bid itemRetrieved = service.retrieve(bidId);
         System.out.println("Item retrieved:");
         System.out.println(itemRetrieved);
         Assert.assertEquals(itemRetrieved.getCreatedById(), "kck");
@@ -75,19 +83,15 @@ public class ListingCRUDTest {
         service.update(itemRetrieved);
 
         // Retrieve the updated item.
-        Listing updatedItem = service.retrieve("601");
+        Bid updatedItem = service.retrieve(bidId);
 
         Assert.assertEquals(updatedItem.getModifiedById(), "vxn");
 
-        Listing listingByUserId = service.getListingsByUserId("kck").get(0);
-
-        Assert.assertNotNull(listingByUserId);
-
-        // Delete the item.
-        service.delete("601");
-
-        // Try to retrieve deleted item.
-        Listing deletedItem = service.retrieve("601");
+        // // Delete the item.
+        service.delete(bidId);
+        //
+        // // Try to retrieve deleted item.
+        Bid deletedItem = service.retrieve(bidId);
         Assert.assertNull(deletedItem);
 
     }
