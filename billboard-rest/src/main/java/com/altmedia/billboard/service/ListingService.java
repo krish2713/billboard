@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.altmedia.billboard.entity.Listing;
+import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
@@ -21,7 +22,7 @@ public class ListingService {
 
     public ListingService() {
         AmazonDynamoDB client = AmazonDynamoDBClientBuilder.standard().build();
-        mapper = new DynamoDBMapper(client);
+        mapper = new DynamoDBMapper(client, new DefaultAWSCredentialsProviderChain());
     }
 
     public void create(Listing listing) {
@@ -30,7 +31,7 @@ public class ListingService {
 
     public URL storeImageInS3(InputStream imageInput, String fileName, String listingId) throws IOException {
         try {
-            S3Link s3Link = mapper.createS3Link("images", listingId + "/" + fileName);
+            S3Link s3Link = mapper.createS3Link("billboardimages", listingId + "/" + fileName);
             s3Link.uploadFrom(IOUtils.toByteArray(imageInput));
             return s3Link.getUrl();
         }
