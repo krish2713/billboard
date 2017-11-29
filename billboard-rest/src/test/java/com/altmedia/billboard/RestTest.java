@@ -15,7 +15,6 @@ import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.media.multipart.file.FileDataBodyPart;
 import org.junit.Ignore;
 import org.junit.Test;
-
 @Ignore
 public class RestTest {
 
@@ -23,11 +22,12 @@ public class RestTest {
     public void testGetIt() throws Exception {
 
         final Client client = ClientBuilder.newBuilder().register(MultiPartFeature.class).build();
-        WebTarget t = client.target(Main.BASE_URI).path("listing");
+        WebTarget t = client.target("http://billboard-rest.us-east-1.elasticbeanstalk.com/api").path("listing");
 
-        FileDataBodyPart filePart = new FileDataBodyPart("images", new File("/home/kck29/repos/billboard/test.png"));
+        FileDataBodyPart filePart = new FileDataBodyPart("images", new File(
+                "/home/kck29/repos/billboard/billboard-rest/src/test/resources/test.png"));
 
-        String empPartJson = "{\n" + "    \"id\": \"122\"\n" + "}\n" + "";
+        String empPartJson = "{\n" + "    \"createdById\": \"kckb\"\n" + "}\n" + "";
 
         MultiPart multipartEntity = new FormDataMultiPart().field("listing", empPartJson,
                                                                   MediaType.APPLICATION_JSON_TYPE).bodyPart(filePart);

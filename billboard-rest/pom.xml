@@ -9,7 +9,6 @@
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>billboard-rest</artifactId>
-	<name>billboard-webapp</name>
 	<url>https://github.com/krish2713/billboard</url>
 	<properties>
 		<jersey.version>2.17</jersey.version>
