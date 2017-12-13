@@ -13,6 +13,7 @@
 	</properties>
 	<modules>
 		<module>billboard-rest</module>
+                 <module>billboard-client</module>
 	</modules>
 	<dependencyManagement>
 		<dependencies>

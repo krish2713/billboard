@@ -68,4 +68,5 @@ public class ListingService {
         return mapper.scan(Listing.class, queryExpression);
 
     }
+
 }

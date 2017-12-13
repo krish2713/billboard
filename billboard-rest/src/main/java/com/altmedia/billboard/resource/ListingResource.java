@@ -64,7 +64,7 @@ public class ListingResource {
     }
 
     @GET
-    @Consumes(MediaType.TEXT_PLAIN)
+    @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response get(@PathParam("id") String listingId) {
         Listing listing = listingService.retrieve(listingId);
@@ -77,6 +77,14 @@ public class ListingResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllByUserId(@QueryParam("userId") String userId) {
         List<Listing> listings = listingService.getListingsByUserId(userId);
+        return Response.ok().entity(listings).build();
+    }
+
+    @Path("list")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response list() {
+        List<Listing> listings = listingService.getAllListings();
         return Response.ok().entity(listings).build();
     }
 
