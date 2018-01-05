@@ -1,0 +1,7 @@
+<h2>Listings</h2>
+<ul class="listings">
+	<li *ngFor="let listing of listings"><a
+		routerLink="/detail/{{listing.id}}"> <span class="badge">{{listing.id}}</span>
+			{{listing.name}}
+	</a></li>
+</ul>
