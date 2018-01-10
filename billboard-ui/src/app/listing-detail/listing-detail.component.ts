@@ -22,7 +22,7 @@ export class ListingDetailComponent implements OnInit {
   }
   
   getListingDetail(): void {
-	  const id = +this.route.snapshot.paramMap.get('id');
+	  const id = this.route.snapshot.paramMap.get('id');
 	  this.listingService.getListingDetail(id)
 	    .subscribe(listing => this.listing = listing);
 	}
@@ -30,5 +30,8 @@ export class ListingDetailComponent implements OnInit {
   goBack(): void {
 	  this.location.back();
 	}
+  
+  
+
 
 }

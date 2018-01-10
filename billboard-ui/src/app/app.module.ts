@@ -12,6 +12,10 @@ import { MessagesComponent } from './messages/messages.component';
 import { MessageService } from './message.service';
 import { AppRoutingModule } from './/app-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { ListingSearchComponent } from './listing-search/listing-search.component';
+import { ListingCreateComponent } from './listing-create/listing-create.component';
+import { MyListingsComponent } from './my-listings/my-listings.component';
+import { ListingEditComponent } from './listing-edit/listing-edit.component';
 
 
 @NgModule({
@@ -20,7 +24,11 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     ListingsComponent,
     ListingDetailComponent,
     MessagesComponent,
-    DashboardComponent
+    DashboardComponent,
+    ListingSearchComponent,
+    ListingCreateComponent,
+    MyListingsComponent,
+    ListingEditComponent
   ],
   imports: [
     BrowserModule,

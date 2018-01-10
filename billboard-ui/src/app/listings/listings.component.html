@@ -1,7 +1,13 @@
 <h2>Listings</h2>
+
+
+<app-listing-search></app-listing-search>
+
+
 <ul class="listings">
 	<li *ngFor="let listing of listings"><a
-		routerLink="/detail/{{listing.id}}"> <span class="badge">{{listing.id}}</span>
-			{{listing.name}}
+		routerLink="/detail/{{listing.id}}"> 
+		<img
+			src="{{listing.imageUrls[0]}}" style="width: 48px; height: 30px;"> {{listing.title}}
 	</a></li>
 </ul>

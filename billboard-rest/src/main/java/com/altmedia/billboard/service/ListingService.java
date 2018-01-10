@@ -31,7 +31,7 @@ public class ListingService {
 
     public URL storeImageInS3(InputStream imageInput, String fileName, String listingId) throws IOException {
         try {
-            S3Link s3Link = mapper.createS3Link("billboardimages", listingId + "/" + fileName);
+            S3Link s3Link = mapper.createS3Link("billboard-images-krishna-karnam", listingId + "/" + fileName);
             s3Link.uploadFrom(IOUtils.toByteArray(imageInput));
             return s3Link.getUrl();
         }

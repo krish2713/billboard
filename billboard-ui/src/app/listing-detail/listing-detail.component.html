@@ -1,12 +1,41 @@
 
 <div *ngIf="listing">
- 
-  <h2>{{ listing.name | uppercase }} Details</h2>
-  <div><span>id: </span>{{listing.id}}</div>
-  <div>
-    <label>name:
-      <input [(ngModel)]="listing.name" placeholder="name">
-    </label>
-  </div>
- <button (click)="goBack()">go back</button>
+	<h2>{{ listing.title | uppercase }} Details</h2>
+	<button (click)="goBack()">go back</button>
+	<button (click)="goBack()">create bid</button>
+	<ul style="list-style-type: none">
+		<li><label>Title:</label> {{listing.title}}</li>
+		<li><label>Type:</label> {{listing.type}}</li>
+		<li><label>Size:</label> {{listing.size}}</li>
+		<li><label>Minimum Period:</label> {{listing.minimunPeriod}}</li>
+		<li><label>Price Per Month:</label> {{listing.pricePerMonth}}</li>
+		<li><label>Create Date:</label> {{listing.createdDate | date }}</li>
+		<li><label>Create By:</label> {{listing.createdById}}</li>
+		<li><label>Modified By:</label> {{listing.modifiedById}}</li>
+		<li><label>Modified Date:</label> {{listing.modifiedDate | date
+			}}</li>
+		<li><label>Start Date:</label> {{listing.startDate | date }}</li>
+		<li><label>End Date:</label> {{listing.endDate | date }}</li>
+		<li><label>From Date:</label> {{listing.fromDate | date }}</li>
+		<li><label>To Date:</label> {{listing.toDate | date }}</li>
+	</ul>
+	<div>
+		<ul style="list-style-type: none">
+			<li><label>Address Line1:</label>
+				{{listing.address.addressLine1}}</li>
+			<li><label>Address Line2:</label>
+				{{listing.address.addressLine2}}</li>
+			<li><label>City:</label> {{listing.address.city}}</li>
+			<li><label>State:</label> {{listing.address.state}}</li>
+			<li><label>Country:</label> {{listing.address.country}}</li>
+		</ul>
+	</div>
+	<div>
+		<ul style="list-style-type: none">
+			<li *ngFor="let image of listing.imageUrls"
+				style="width: 50px; height: 50px;"><img src="{{image}}">
+			</li>
+		</ul>
+	</div>
+
 </div>

@@ -18,10 +18,8 @@ export class ListingsComponent implements OnInit {
 	  this.getListings();
   }
   
-  
-
  getListings(): void {
 	  this.listingService.getListings().subscribe(listings => this.listings = listings);
-	}
+	} 
 
 }

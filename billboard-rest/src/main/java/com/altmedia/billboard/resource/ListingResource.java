@@ -13,7 +13,6 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -33,13 +32,22 @@ public class ListingResource {
     public Response create(@FormDataParam("listing") Listing listing,
                            @FormDataParam("images") List<FormDataBodyPart> imageParts) {
         try {
-            listing.setId(UUID.randomUUID().toString());
-            for (FormDataBodyPart part : imageParts) {
-                InputStream is = part.getEntityAs(InputStream.class);
-                ContentDisposition meta = part.getContentDisposition();
-                URL url = listingService.storeImageInS3(is, meta.getFileName(), listing.getId());;
-                listing.getImageUrls().add(url);
+
+            if (imageParts != null) {
+                if (imageParts.size() > 4) {
+                    throw new Exception("too many images");
+                }
+                int i = 0;
+                for (FormDataBodyPart part : imageParts) {
+                    InputStream is = part.getEntityAs(InputStream.class);
+                    ContentDisposition meta = part.getContentDisposition();
+                    URL url = listingService.storeImageInS3(is, meta.getFileName(), listing.getId());;
+                    listing.getImageUrls().add(i++, url);
+                }
+
             }
+
+            listing.setId(UUID.randomUUID().toString());
             listingService.create(listing);
             return Response.ok().build();
         }
@@ -75,7 +83,7 @@ public class ListingResource {
     @GET
     @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllByUserId(@QueryParam("userId") String userId) {
+    public Response getAllByUserId(@PathParam("userId") String userId) {
         List<Listing> listings = listingService.getListingsByUserId(userId);
         return Response.ok().entity(listings).build();
     }

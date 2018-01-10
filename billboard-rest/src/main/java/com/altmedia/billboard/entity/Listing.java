@@ -12,6 +12,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 @DynamoDBTable(tableName = "Listing")
 public class Listing {
     private String id;
+    private String title;
     private Address address;
     private int size;
     private List<URL> imageUrls = new ArrayList<URL>();
@@ -31,6 +32,11 @@ public class Listing {
     @DynamoDBHashKey(attributeName = "Id")
     public String getId() {
         return id;
+    }
+
+    @DynamoDBAttribute(attributeName = "title")
+    public String getTitle() {
+        return title;
     }
 
     @DynamoDBAttribute(attributeName = "FromDate")
@@ -175,6 +181,11 @@ public class Listing {
 
     public Listing setImageUrls(List<URL> imageUrls) {
         this.imageUrls = imageUrls;
+        return this;
+    }
+
+    public Listing setTitle(String title) {
+        this.title = title;
         return this;
     }
 
