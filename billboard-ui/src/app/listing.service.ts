@@ -20,7 +20,6 @@ export class ListingService {
   
   private listingUrl = 'http://localhost:8080/api/listing';
   
-  /** Log a HeroService message with the MessageService */
   private log(message: string) {
     this.messageService.add('ListingService: ' + message);
   }
@@ -50,16 +49,34 @@ export class ListingService {
 	}
   
   /** PUT: update the listing on the server */
-  updateListing (listing: Listing): Observable<any> {
-	  console.log(listing);
-    return this.http.put(this.listingUrl, listing, httpOptions).pipe(
+  updateListing (listing: Listing, images: FileList): Observable<any> {
+	  let formData:FormData = new FormData();
+	  var listingData = new Blob([JSON.stringify(listing)], { type: "application/json"});
+      formData.append('listing', listingData );
+      if(images){
+      for ( var i = 0; i < images.length; i++){
+     	 let file:File = images[i];
+     	 formData.append('images', file,file.name);
+      }
+      }
+    return this.http.put(this.listingUrl, formData).pipe(
       tap(_ => this.log(`updated listing id=${listing.id}`)),
       catchError(this.handleError<any>('updateListing'))
     );
   }
   
-  addListing (listing: Listing): Observable<Listing> {
-	  return this.http.post<Listing>(this.listingUrl, listing, httpOptions).pipe(
+  addListing (listing: Listing, images: FileList): Observable<Listing> {
+	  let formData:FormData = new FormData();
+  if(images){
+     for ( var i = 0; i < images.length; i++){
+    	 let file:File = images[i];
+    	 formData.append('images', file,file.name);
+     }
+  }
+      var listingData = new Blob([JSON.stringify(listing)], { type: "application/json"});
+      formData.append('listing', listingData );
+      
+    return this.http.post<Listing>(this.listingUrl, formData).pipe(
 	    tap((listing: Listing) => this.log(`added listing w/ id=${listing.id}`)),
 	    catchError(this.handleError<Listing>('addListing'))
 	  );
@@ -70,7 +87,7 @@ export class ListingService {
     const id = typeof listing === 'number' ? listing : listing.id;
     const url = `${this.listingUrl}/${id}`;
 
-    return this.http.delete<Listing>(url, httpOptions).pipe(
+    return this.http.delete<Listing>(url).pipe(
       tap(_ => this.log(`deleted listing id=${id}`)),
       catchError(this.handleError<Listing>('deleteListing'))
     );

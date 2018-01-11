@@ -12,6 +12,7 @@ import { ListingService }  from '../listing.service';
 })
 export class ListingEditComponent implements OnInit {
 	 listing: Listing;
+     images: FileList;
 
 	  constructor( private route: ActivatedRoute,
 			  private listingService: ListingService,
@@ -32,8 +33,14 @@ export class ListingEditComponent implements OnInit {
 		}
 	  
 	  save(): void {
-		   this.listingService.updateListing(this.listing)
+		  console.log(this.listing.title);
+		   this.listingService.updateListing(this.listing,this.images)
 		     .subscribe(() => this.goBack());
 		 }
+	  
+	  fileChangeEvent(fileInput: any){
+	      this.images = fileInput.target.files;        
+	   }
+		 
 	  
 }

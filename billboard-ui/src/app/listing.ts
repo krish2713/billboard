@@ -10,5 +10,6 @@ export class Listing {
   startDate: Date;
   endDate: Date;
   type:string;
+  createdById:string;
   imageUrls:string[];
 }

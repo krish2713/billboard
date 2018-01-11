@@ -42,7 +42,7 @@ public class BidResource {
     }
 
     @GET
-    @Consumes(MediaType.TEXT_PLAIN)
+    @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response get(@PathParam("id") String bidId) {
         Bid bid = service.retrieve(bidId);
@@ -56,6 +56,15 @@ public class BidResource {
     public Response getBidsForListing(@PathParam("listingId") String listingId) {
         List<Bid> bids = service.getAllBidsForListing(listingId);
         return Response.ok().entity(bids).build();
+    }
+
+    @Path("user/{userId}")
+    @GET
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllByUserId(@PathParam("userId") String userId) {
+        List<Bid> listings = service.getAllBidsForUserId(userId);
+        return Response.ok().entity(listings).build();
     }
 
 }

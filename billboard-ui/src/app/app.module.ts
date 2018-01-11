@@ -16,6 +16,9 @@ import { ListingSearchComponent } from './listing-search/listing-search.componen
 import { ListingCreateComponent } from './listing-create/listing-create.component';
 import { MyListingsComponent } from './my-listings/my-listings.component';
 import { ListingEditComponent } from './listing-edit/listing-edit.component';
+import { BidService } from './bid.service';
+import { BidDetailComponent } from './bid-detail/bid-detail.component';
+import { MyBidsComponent } from './my-bids/my-bids.component';
 
 
 @NgModule({
@@ -28,7 +31,9 @@ import { ListingEditComponent } from './listing-edit/listing-edit.component';
     ListingSearchComponent,
     ListingCreateComponent,
     MyListingsComponent,
-    ListingEditComponent
+    ListingEditComponent,
+    BidDetailComponent,
+    MyBidsComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +42,7 @@ import { ListingEditComponent } from './listing-edit/listing-edit.component';
     HttpClientModule
     
   ],
-  providers: [ListingService, MessageService],
+  providers: [ListingService, MessageService, BidService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

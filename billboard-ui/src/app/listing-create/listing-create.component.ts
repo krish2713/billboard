@@ -20,17 +20,20 @@ export class ListingCreateComponent implements OnInit {
   ngOnInit() {
 	  this.listing = new Listing();
 	  this.listing.address = new Address();
-	  this.images= new FileList();
-  }
+	  this.listing.createdById = 'kck';
+	    }
   
   create(): void {
-	   this.listingService.addListing(this.listing)
+	   this.listingService.addListing(this.listing,this.images)
 	     .subscribe(() => this.goBack());
 	 }
   
   goBack(): void {
 	  this.location.back();
 	}
-
+  
+  fileChangeEvent(fileInput: any){
+      this.images = fileInput.target.files;        
+   }
 
 }

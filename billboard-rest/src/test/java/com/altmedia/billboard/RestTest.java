@@ -27,7 +27,7 @@ public class RestTest {
     public void testGetIt() throws Exception {
 
         final Client client = ClientBuilder.newBuilder().register(MultiPartFeature.class).build();
-        WebTarget t = client.target("http://localhost:8080/api").path("listing");
+        WebTarget t = client.target("http://localhost:8090/api").path("listing");
 
         FileDataBodyPart filePart = new FileDataBodyPart("images", new File(
                 "/home/kck29/repos/billboard/billboard-rest/src/test/resources/img-1.jpg"));

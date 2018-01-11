@@ -1,5 +1,6 @@
 package com.altmedia.billboard.resource;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.List;
@@ -16,56 +17,78 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.glassfish.jersey.media.multipart.ContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
-import org.glassfish.jersey.media.multipart.FormDataParam;
+import org.glassfish.jersey.media.multipart.FormDataMultiPart;
 
 import com.altmedia.billboard.entity.Listing;
 import com.altmedia.billboard.service.ListingService;
 
 @Path("listing")
 public class ListingResource {
+    private Log LOGGER = LogFactory.getLog(ListingResource.class);
     private ListingService listingService = new ListingService();
 
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public Response create(@FormDataParam("listing") Listing listing,
-                           @FormDataParam("images") List<FormDataBodyPart> imageParts) {
+    public Response create(final FormDataMultiPart multiPart) {
         try {
-
+            List<FormDataBodyPart> imageParts = multiPart.getFields("images");
+            FormDataBodyPart listingPart = multiPart.getField("listing");
+            Listing listing = listingPart.getEntityAs(Listing.class);
             if (imageParts != null) {
-                if (imageParts.size() > 4) {
-                    throw new Exception("too many images");
-                }
-                int i = 0;
-                for (FormDataBodyPart part : imageParts) {
-                    InputStream is = part.getEntityAs(InputStream.class);
-                    ContentDisposition meta = part.getContentDisposition();
-                    URL url = listingService.storeImageInS3(is, meta.getFileName(), listing.getId());;
-                    listing.getImageUrls().add(i++, url);
-                }
-
+                listing.setId(UUID.randomUUID().toString());
+                uploadImagesToS3(imageParts, listing);
+                listingService.create(listing);
+                return Response.ok().build();
             }
 
-            listing.setId(UUID.randomUUID().toString());
-            listingService.create(listing);
-            return Response.ok().build();
         }
         catch (Throwable e) {
-            e.printStackTrace();
+            LOGGER.error("Error creating listing",e);
         }
         return Response.serverError().build();
     }
 
     @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response update(Listing listing) {
-        listingService.update(listing);
-        return Response.ok().build();
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public Response update(final FormDataMultiPart multiPart) {
+        try {
+            List<FormDataBodyPart> imageParts = multiPart.getFields("images");
+            FormDataBodyPart listingPart = multiPart.getField("listing");
+            Listing listing = listingPart.getEntityAs(Listing.class);
+            if (imageParts != null) {
+                listing.getImageUrls().clear();
+                uploadImagesToS3(imageParts, listing);
+
+            }
+            listingService.update(listing);
+            return Response.ok().build();
+
+        }
+        catch (Throwable e) {
+            LOGGER.error("Error updating listing",e);
+        }
+        return Response.serverError().build();
+    }
+
+    private void uploadImagesToS3(List<FormDataBodyPart> imageParts, Listing listing) throws Exception, IOException {
+        if (imageParts.size() > 4) {
+            throw new Exception("too many images!");
+        }
+        int i = 0;
+        for (FormDataBodyPart part : imageParts) {
+            InputStream is = part.getEntityAs(InputStream.class);
+            ContentDisposition meta = part.getContentDisposition();
+            URL url = listingService.storeImageInS3(is, meta.getFileName(), listing.getId());;
+            listing.getImageUrls().add(i++, url);
+        }
     }
 
     @DELETE
-    @Consumes(MediaType.TEXT_PLAIN)
+    @Path("{id}")
     public Response delete(@PathParam("id") String listingId) {
         listingService.delete(listingId);
         return Response.ok().build();

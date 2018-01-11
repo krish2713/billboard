@@ -1,0 +1,7 @@
+<h2>My Bids</h2>
+<div *ngIf="bids">
+	<ul class="bids">
+		<li *ngFor="let bid of bids"><a
+			routerLink="/bid-detail/{{bid.id}}"> {{bid.title}} </a></li>
+	</ul>
+</div>

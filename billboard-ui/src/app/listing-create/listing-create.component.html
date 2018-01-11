@@ -1,13 +1,13 @@
 <div *ngIf="listing">
 	<h2>{{ listing.title | uppercase }} Details</h2>
 	<button (click)="goBack()">go back</button>
-	<button (click)="save()">create</button>
+	<button (click)="create()">create</button>
 	<ul style="list-style-type: none">
 		<li><label>Title:</label><input [(ngModel)]="listing.title"
 			placeholder="title" /></li>
 		<li><label>Type:</label> <select [(ngModel)]="listing.type">
 				<option value="Auction">Auction</option>
-				<option value=FixedBid>FixedBid</option>
+				<option value=FixedPrice>FixedPrice</option>
 		</select></li>
 		<li><label>Size:</label><input [(ngModel)]="listing.size"
 			placeholder="size" /></li>
@@ -43,10 +43,7 @@
 	</div>
 	<div>
 		<ul style="list-style-type: none">
-			<li><input type="file" accept="image/*" [(ngModel)]="images[0]"></li>
-			<li><input type="file" accept="image/*"></li>
-			<li><input type="file" accept="image/*"></li>
-			<li><input type="file" accept="image/*"></li>
+			<li><input type="file" accept="image/*" multiple (change)="fileChangeEvent($event)" ></li>
 		</ul>
 	</div>
 

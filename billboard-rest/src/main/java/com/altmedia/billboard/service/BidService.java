@@ -45,4 +45,13 @@ public class BidService {
         return mapper.scan(Bid.class, queryExpression);
 
     }
+    
+    public List<Bid> getAllBidsForUserId(String userId) {
+        Map<String, AttributeValue> eav = new HashMap<String, AttributeValue>();
+        eav.put(":val1", new AttributeValue().withS(userId));
+        DynamoDBScanExpression queryExpression = new DynamoDBScanExpression().withFilterExpression("CreatedById = :val1")
+                .withExpressionAttributeValues(eav);
+        return mapper.scan(Bid.class, queryExpression);
+
+    }
 }

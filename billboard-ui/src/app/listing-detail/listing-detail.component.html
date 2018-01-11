@@ -2,7 +2,41 @@
 <div *ngIf="listing">
 	<h2>{{ listing.title | uppercase }} Details</h2>
 	<button (click)="goBack()">go back</button>
-	<button (click)="goBack()">create bid</button>
+	<button (click)="showPopover = !showPopover">create bid</button>
+	<button (click)="getBidsForListing()">show bids</button>
+	<div *ngIf="showBidsPopover" class="popOver">
+		<div *ngIf="currentBids">
+			<ul style="list-style-type: none">
+				<li *ngFor="let bid of currentBids"><a
+					routerLink="/bid-detail/{{bid.id}}"> {{bid.title}} </a></li>
+			</ul>
+		</div>
+	</div>
+	<div *ngIf="showPopover" class="popOver">
+		<ul style="list-style-type: none">
+			<label>Title:</label>
+			<input [(ngModel)]="bid.title" placeholder="title" />
+			<li><label>BidAmount:</label><input [(ngModel)]="bid.bidAmount"
+				placeholder="bidAmount" /></li>
+			<li><label>specialInstruction:</label><input
+				[(ngModel)]="bid.specialInstruction"
+				placeholder="specialInstruction" /></li>
+			<li><label>FirstName:</label> <input
+				[(ngModel)]="bid.userInfo.firstName" placeholder="firstName" /></li>
+			<li><label>LastName:</label> <input
+				[(ngModel)]="bid.userInfo.lastName" placeholder="lastName" /></li>
+			<li><label>EmailAddress:</label> <input
+				[(ngModel)]="bid.userInfo.emailAddress" placeholder="emailAddress" /></li>
+			<li><label>Phone:</label> <input
+				[(ngModel)]="bid.userInfo.phone" placeholder="phone" /></li>
+
+			<li><label>AdditonalInfo:</label> <input
+				[(ngModel)]="bid.userInfo.additonalInfo" placeholder="additonalInfo" /></li>
+		</ul>
+		<button (click)="showPopover = false" class="btn">Close</button>
+		<button (click)="createBid()" class="btn">Create</button>
+	</div>
+	<div *ngIf="showPopover" class="modal" (click)="showPopover = false"></div>
 	<ul style="list-style-type: none">
 		<li><label>Title:</label> {{listing.title}}</li>
 		<li><label>Type:</label> {{listing.type}}</li>
@@ -33,9 +67,11 @@
 	<div>
 		<ul style="list-style-type: none">
 			<li *ngFor="let image of listing.imageUrls"
-				style="width: 50px; height: 50px;"><img src="{{image}}">
+				style="width: 48px; height: 30px;"><img src="{{image}}">
 			</li>
 		</ul>
 	</div>
+
+
 
 </div>
