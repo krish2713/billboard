@@ -12,7 +12,7 @@ import { ListingEditComponent }  from './listing-edit/listing-edit.component';
 
 
 const routes: Routes = [
-                        { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+                        { path: '', redirectTo: '/listings', pathMatch: 'full' },
                         { path: 'dashboard', component: DashboardComponent },
                         { path: 'listings', component: ListingsComponent },
                         { path: 'listing-detail/:id', component: ListingDetailComponent },

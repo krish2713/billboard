@@ -51,7 +51,7 @@ showBidsPopover = false;
 		  this.bid.type='FixedBid';
 	  }
 	  this.bidService.createBid(this.bid)
-	    .subscribe( this.showPopover= false;);
+	    .subscribe(() => this.showPopover= false);
 	  
 	}
   

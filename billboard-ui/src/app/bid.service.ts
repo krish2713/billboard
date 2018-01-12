@@ -14,7 +14,7 @@ export class BidService {
 
   constructor(private http: HttpClient, private messageService: MessageService) { }
   
-  private bidUrl = 'http://localhost:8080/api/bid';
+  private bidUrl = 'http://billboard-rest.us-east-1.elasticbeanstalk.com/api/bid';
   
   private log(message: string) {
     this.messageService.add('BidService: ' + message);

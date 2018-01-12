@@ -18,7 +18,7 @@ export class ListingService {
 
   constructor(private http: HttpClient, private messageService: MessageService) { }
   
-  private listingUrl = 'http://localhost:8080/api/listing';
+  private listingUrl = 'http://billboard-rest.us-east-1.elasticbeanstalk.com/api/listing';
   
   private log(message: string) {
     this.messageService.add('ListingService: ' + message);
