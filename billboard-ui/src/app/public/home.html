@@ -1,0 +1,31 @@
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
+    <div class="container topnav">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a [routerLink]="['/home']">Home</a>
+                </li>
+                <li>
+                    <a [routerLink]="['/home/login','user']">Login</a>
+                </li>
+                <li>
+                    <a [routerLink]="['/home/login','vendor']">Vendor Login</a>
+                </li>
+                <li>
+                    <a [routerLink]="['/home/login','admin']">Admin Login</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<div class="intro-header">
+    <router-outlet></router-outlet>
+</div>
+
