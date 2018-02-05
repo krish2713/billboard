@@ -28,8 +28,8 @@ export class BidService {
 	    );
   }
   
-  getMyBids():Observable<Bid[]> {
-	  const url = `${this.bidUrl}/user/kck`;
+  getMyBids(userId: string):Observable<Bid[]> {
+	  const url = `${this.bidUrl}/user/userId`;
 	  this.messageService.add('BidService: fetched myBids');
 	  return this.http.get<Bid[]>(url).pipe( tap(bids => this.log(`fetched mybids`)),
 		      catchError(this.handleError('getMyBids', []))

@@ -5,11 +5,7 @@
     <div *ngIf="errorMessage!=null" class="alert alert-danger">
         {{ errorMessage }}
     </div>
-     <div class="form-group">
-        <label class="control-label" for="signupName">Are you a vendor?</label>
-        <input id="vendor" type="checkbox" class="form-control"
-               [(ngModel)]="registrationUser.vendorFlag" [ngModelOptions]="{standalone: true}">
-    </div>
+   
     <div class="form-group">
         <label class="control-label" for="signupName">Name</label>
         <input id="signupName" type="text" maxlength="50" class="form-control"

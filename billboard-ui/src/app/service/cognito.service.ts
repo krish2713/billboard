@@ -35,6 +35,9 @@ export class CognitoUtil {
     public static _VENDOR_CLIENT_ID = environment.vendorClientId;
     public static _ADMIN_POOL_ID = environment.adminPoolId;
     public static _ADMIN_CLIENT_ID = environment.adminClientId;
+    private role = '';
+    
+    
     
 
     public static _POOL_DATA:any = {
@@ -53,24 +56,27 @@ export class CognitoUtil {
      };
 
     public cognitoCreds: AWS.CognitoIdentityCredentials;
-
-//    getUserPool() {
-//        return new CognitoUserPool(CognitoUtil._POOL_DATA);
-//    }
     
-    getUserPool(role: string) {
-    	console.log(role);
-    	if(role == 'user')
-        return new CognitoUserPool(CognitoUtil._POOL_DATA);
-    	else if(role == 'vendor')
-    	 return new CognitoUserPool(CognitoUtil._VENDOR_POOL_DATA);	
-    	else if(role == 'admin')
-       	 return new CognitoUserPool(CognitoUtil._ADMIN_POOL_DATA);	
+    setRole(role: string) {
+    	this.role = role;
     }
     
+    getRole() {
+    	return this.role;
+    }
 
-    getCurrentUser(role: string) {
-        return this.getUserPool(role).getCurrentUser();
+    getUserPool() {
+    	console.log(this.role);
+    	if(this.role == 'user')
+        return new CognitoUserPool(CognitoUtil._POOL_DATA);
+    	else if(this.role == 'vendor')
+    	 return new CognitoUserPool(CognitoUtil._VENDOR_POOL_DATA);	
+    	else if(this.role == 'admin')
+       	 return new CognitoUserPool(CognitoUtil._ADMIN_POOL_DATA);
+    }
+   
+    getCurrentUser() {
+        return this.getUserPool().getCurrentUser();
     }
 
     // AWS Stores Credentials in many ways, and with TypeScript this means that 

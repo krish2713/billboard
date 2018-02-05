@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Listing } from '../listing';
 import { ListingService } from '../listing.service';
+import { CognitoUtil } from '../service/cognito.service';
 
 @Component({
   selector: 'app-my-listings',
@@ -11,7 +12,7 @@ export class MyListingsComponent implements OnInit {
 
 	listings: Listing[];
 
-constructor(private listingService: ListingService) { }
+constructor(private listingService: ListingService, private cognitoUtil: CognitoUtil) { }
 
 ngOnInit() {
 	  this.getMyListings();
@@ -23,7 +24,8 @@ ngOnInit() {
 	}
   
   getMyListings(): void {
-	  this.listingService.getMyListings().subscribe(listings => this.listings = listings);
+	  let email = this.cognitoUtil.getCurrentUser().getUsername();
+	  this.listingService.getMyListings(email).subscribe(listings => this.listings = listings);
 	}
 
 }

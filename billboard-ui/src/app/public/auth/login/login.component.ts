@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {UserLoginService} from "../../../service/user-login.service";
 import {CognitoCallback, LoggedInCallback} from "../../../service/cognito.service";
 import {DynamoDBService} from "../../../service/ddb.service";
+import {CognitoUtil} from "../../../service/cognito.service";
 
 
 @Component({
@@ -19,6 +20,7 @@ export class LoginComponent implements CognitoCallback, LoggedInCallback, OnInit
     constructor(public router: Router,
                 public ddb: DynamoDBService,
                 public route: ActivatedRoute,
+                public cognitoUtil: CognitoUtil,
                 public userService: UserLoginService) {
         console.log("LoginComponent constructor");
     }
@@ -28,8 +30,9 @@ export class LoginComponent implements CognitoCallback, LoggedInCallback, OnInit
         this.sub = this.route.params.subscribe(params => {
             this.role = params['role'];
         });
+        this.cognitoUtil.setRole(this.role);
         console.log("Checking if the user is already authenticated. If so, then redirect to the secure site");
-        this.userService.isAuthenticated(this.role, this);
+        this.userService.isAuthenticated(this);
       }
 
     onLogin() {
@@ -38,7 +41,7 @@ export class LoginComponent implements CognitoCallback, LoggedInCallback, OnInit
             return;
         }
         this.errorMessage = null;
-        this.userService.authenticate(this.email, this.password, this.role, this);
+        this.userService.authenticate(this.email, this.password, this);
     }
 
     cognitoCallback(message: string, result: any) {

@@ -49,7 +49,6 @@ export class GetParametersCallback implements Callback {
             let parameter = new Parameters();
             parameter.name = result[i].getName();
             parameter.value = result[i].getValue();
-            console.log(parameter);
             this.me.parameters.push(parameter);
         }
         let param = new Parameters()

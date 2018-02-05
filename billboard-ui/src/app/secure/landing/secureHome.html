@@ -6,11 +6,11 @@
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle" data-toggle="collapse"
 				data-target=".navbar-collapse">
-				<span class="sr-only">Toggle navigation</span> <span
+				<span
 					class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="index.html">Cognito Startup</a>
+		
 		</div>
 		<!-- /.navbar-header -->
 
@@ -38,13 +38,13 @@
 							class="fa fa-dashboard fa-fw"></i> My Profile</a></li>
 					<li><a [routerLink]="['/securehome/jwttokens']"><i
 							class="fa fa-table fa-fw"></i> JWT Tokens</a></li>
-					<li><a [routerLink]="['/securehome/useractivity']"><i
+					<li ><a [routerLink]="['/securehome/useractivity']"><i
 							class="fa fa-table fa-fw"></i> Login Data</a></li>
-					<li><a routerLink="/listings"><i
+					<li><a routerLink="/securehome/listings"><i
 							class="fa fa-dashboard fa-fw"></i>Listings</a></li>
-					<li><a routerLink="/mylistings"><i
+					<li *ngIf="role=='vendor'"><a routerLink="/securehome/mylistings"><i
 							class="fa fa-dashboard fa-fw"></i>MyListings</a></li>
-					<li><a routerLink="/mybids"><i
+					<li *ngIf="role=='user'"><a routerLink="/securehome/mybids"><i
 							class="fa fa-dashboard fa-fw"></i>MyBids</a></li>
 
 				</ul>

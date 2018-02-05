@@ -32,8 +32,8 @@ export class ListingService {
 	    );
   }
   
-  getMyListings():Observable<Listing[]> {
-	  const url = `${this.listingUrl}/user/kck`;
+  getMyListings(userId: string):Observable<Listing[]> {
+	  const url = `${this.listingUrl}/user/userId`;
 	  this.messageService.add('ListingService: fetched mylistings');
 	  return this.http.get<Listing[]>(url).pipe( tap(listings => this.log(`fetched mylistings`)),
 		      catchError(this.handleError('getMyListings', []))
@@ -128,11 +128,4 @@ export class ListingService {
       return of(result as T);
     };
   }
-  
-  
-  
- 
-
-  
-
 }

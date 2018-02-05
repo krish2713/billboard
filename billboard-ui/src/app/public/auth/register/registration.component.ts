@@ -7,7 +7,7 @@ export class RegistrationUser {
     name: string;
     email: string;
     password: string;
-    vendorFlag: string;
+   
 }
 /**
  * This component is responsible for displaying and controlling
@@ -46,7 +46,7 @@ export class RegisterComponent implements CognitoCallback {
         } else { //success
             //move to the next step
             console.log("redirecting");
-            this.router.navigate(['/home/confirmRegistration',result.user.username, this.registrationUser.vendorFlag]);
+            this.router.navigate(['/home/confirmRegistration',result.user.username]);
         }
     }
 }

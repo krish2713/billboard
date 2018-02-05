@@ -12,7 +12,7 @@ export class UserLoginService {
     constructor(public ddb: DynamoDBService, public cognitoUtil: CognitoUtil) {
     }
 
-    authenticate(username: string, password: string, role: string, callback: CognitoCallback) {
+    authenticate(username: string, password: string, callback: CognitoCallback) {
         console.log("UserLoginService: starting the authentication");
       
         let authenticationData = {
@@ -23,7 +23,7 @@ export class UserLoginService {
 
         let userData = {
             Username: username,
-            Pool: this.cognitoUtil.getUserPool(role)
+            Pool: this.cognitoUtil.getUserPool()
         };
 
         console.log("UserLoginService: Params set...Authenticating the user");
@@ -66,10 +66,10 @@ export class UserLoginService {
         });
     }
 
-    forgotPassword(username: string, role: string, callback: CognitoCallback) {
+    forgotPassword(username: string, callback: CognitoCallback) {
         let userData = {
             Username: username,
-            Pool: this.cognitoUtil.getUserPool(role)
+            Pool: this.cognitoUtil.getUserPool()
         };
 
         let cognitoUser = new CognitoUser(userData);
@@ -87,10 +87,10 @@ export class UserLoginService {
         });
     }
 
-    confirmNewPassword(email: string, role: string, verificationCode: string, password: string, callback: CognitoCallback) {
+    confirmNewPassword(email: string, verificationCode: string, password: string, callback: CognitoCallback) {
         let userData = {
             Username: email,
-            Pool: this.cognitoUtil.getUserPool(role)
+            Pool: this.cognitoUtil.getUserPool()
         };
 
         let cognitoUser = new CognitoUser(userData);
@@ -105,18 +105,18 @@ export class UserLoginService {
         });
     }
 
-    logout(role: string) {
+    logout() {
         console.log("UserLoginService: Logging out");
         this.ddb.writeLogEntry("logout");
-        this.cognitoUtil.getCurrentUser(role).signOut();
+        this.cognitoUtil.getCurrentUser().signOut();
 
     }
 
-    isAuthenticated(role: string, callback: LoggedInCallback) {
+    isAuthenticated(callback: LoggedInCallback) {
         if (callback == null)
             throw("UserLoginService: Callback in isAuthenticated() cannot be null");
 
-        let cognitoUser = this.cognitoUtil.getCurrentUser(role);
+        let cognitoUser = this.cognitoUtil.getCurrentUser();
 
         if (cognitoUser != null) {
             cognitoUser.getSession(function (err, session) {

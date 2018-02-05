@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Bid } from '../bid';
 import { BidService } from '../bid.service';
+import { CognitoUtil } from '../service/cognito.service';
 
 @Component({
   selector: 'app-my-bids',
@@ -10,14 +11,15 @@ import { BidService } from '../bid.service';
 export class MyBidsComponent implements OnInit {
 	bids: Bid[];
 
-constructor(private bidService: BidService) { }
+constructor(private bidService: BidService, private cognitoUtil: CognitoUtil) { }
 
 ngOnInit() {
 	  this.getMyBids();
 }
   
 getMyBids(): void {
-	  this.bidService.getMyBids().subscribe(bids => this.bids = bids);
+	  let email = this.cognitoUtil.getCurrentUser().getUsername();
+	  this.bidService.getMyBids(email).subscribe(bids => this.bids = bids);
 	}
 
 }

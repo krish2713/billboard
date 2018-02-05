@@ -32,12 +32,12 @@ const homeRoutes: Routes = [
                                 children: [
                                     {path: 'about', component: AboutComponent},
                                     {path: 'login/:role', component: LoginComponent},
-                                    {path: 'register/:role', component: RegisterComponent},
-                                    {path: 'confirmRegistration/:username/:role', component: RegistrationConfirmationComponent},
-                                    {path: 'resendCode/:role', component: ResendCodeComponent},
-                                    {path: 'forgotPassword/:email/:role', component: ForgotPassword2Component},
-                                    {path: 'forgotPassword/:role', component: ForgotPasswordStep1Component},
-                                    {path: 'newPassword/:role', component: NewPasswordComponent},
+                                    {path: 'register', component: RegisterComponent},
+                                    {path: 'confirmRegistration/:username', component: RegistrationConfirmationComponent},
+                                    {path: 'resendCode', component: ResendCodeComponent},
+                                    {path: 'forgotPassword/:email', component: ForgotPassword2Component},
+                                    {path: 'forgotPassword', component: ForgotPasswordStep1Component},
+                                    {path: 'newPassword', component: NewPasswordComponent},
                                     {path: '', component: HomeLandingComponent}
                                 ]
                             },
