@@ -24,13 +24,13 @@ export class UserRegistrationService {
             Value: user.email
         };
         let dataNickname = {
-            Name: 'nickname',
+            Name: 'Username',
             Value: user.name
         };
         attributeList.push(new CognitoUserAttribute(dataEmail));
-        attributeList.push(new CognitoUserAttribute(dataNickname));
+      //  attributeList.push(new CognitoUserAttribute(dataNickname));
         
-        this.cognitoUtil.getUserPool().signUp(user.email, user.password, attributeList, null, function (err, result) {
+        this.cognitoUtil.getUserPool().signUp(user.name, user.password, attributeList, null, function (err, result) {
             if (err) {
                 callback.cognitoCallback(err.message, null);
             } else {

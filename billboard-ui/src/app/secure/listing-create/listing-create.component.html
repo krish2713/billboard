@@ -1,0 +1,50 @@
+<div *ngIf="listing">
+	<h2>{{ listing.title | uppercase }} Details</h2>
+	<button (click)="goBack()">go back</button>
+	<button (click)="create()">create</button>
+	<ul style="list-style-type: none">
+		<li><label>Title:</label><input [(ngModel)]="listing.title"
+			placeholder="title" /></li>
+		<li><label>Type:</label> <select [(ngModel)]="listing.type">
+				<option value="Auction">Auction</option>
+				<option value=FixedPrice>FixedPrice</option>
+		</select></li>
+		<li><label>Size:</label><input [(ngModel)]="listing.size"
+			placeholder="size" /></li>
+		<li><label>Minimum Period:</label> <input
+			[(ngModel)]="listing.minimumPeriod" placeholder="minimunPeriod" /></li>
+		<li><label>Price Per Month:</label> <input
+			[(ngModel)]="listing.pricePerMonth" placeholder="pricePerMonth" /></li>
+		<li><label>Start Date(YYYY-MM-DD):</label> <input
+			[(ngModel)]="listing.startDate" placeholder="startDate" /></li>
+		<li><label>End Date(YYYY-MM-DD):</label> <input [(ngModel)]="listing.endDate"
+			placeholder="endDate" /></li>
+		<li><label>From Date(YYYY-MM-DD):</label> <input
+			[(ngModel)]="listing.fromDate" placeholder="fromDate" /></li>
+		<li><label>To Date(YYYY-MM-DD):</label> <input [(ngModel)]="listing.toDate"
+			placeholder="toDate" /></li>
+
+	</ul>
+	<div>
+		<ul style="list-style-type: none">
+			<li><label>Address Line1:</label> <input
+				[(ngModel)]="listing.address.addressLine1"
+				placeholder="addressLine1" /></li>
+			<li><label>Address Line2:</label> <input
+				[(ngModel)]="listing.address.addressLine2"
+				placeholder="addressLine2" /></li>
+			<li><label>City:</label> <input
+				[(ngModel)]="listing.address.city" placeholder="city" /></li>
+			<li><label>State:</label> <input
+				[(ngModel)]="listing.address.state" placeholder="state" /></li>
+			<li><label>Country:</label> <input
+				[(ngModel)]="listing.address.country" placeholder="country" /></li>
+		</ul>
+	</div>
+	<div>
+		<ul style="list-style-type: none">
+			<li><input type="file" accept="image/*" multiple (change)="fileChangeEvent($event)" ></li>
+		</ul>
+	</div>
+
+</div>

@@ -1,0 +1,14 @@
+<h2>My Listings</h2>
+<button class="create" title="create listing"
+	routerLink="/securehome/createlisting">create</button>
+<ul class="listings">
+	<li *ngFor="let listing of listings"><a
+		routerLink="/securehome/listing-detail/{{listing.id}}"> <img
+			src="{{listing.imageUrls[0]}}" style="width: 48px; height: 30px;">
+			{{listing.title}}
+	</a>
+		<button class="edit" title="edit listing"
+			routerLink="/securehome/editListing/{{listing.id}}">edit</button>
+		<button class="delete" title="delete listing"
+			(click)="delete(listing)">delete</button></li>
+</ul>

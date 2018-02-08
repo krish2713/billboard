@@ -20,7 +20,13 @@ import com.amazonaws.util.IOUtils;
 public class ListingService {
     private DynamoDBMapper mapper;
 
-    public ListingService() {
+    private static final ListingService instance = new ListingService();
+
+    public static ListingService getInstance() {
+        return instance;
+    }
+
+    private ListingService() {
         AmazonDynamoDB client = AmazonDynamoDBClientBuilder.standard().build();
         mapper = new DynamoDBMapper(client, new DefaultAWSCredentialsProviderChain());
     }

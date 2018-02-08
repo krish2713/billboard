@@ -11,7 +11,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 public class Bid {
     private String id;
     private String listingId;
-    private String specialInstruction;
+    private String additionalInfo;
     private int priority;
     private UserInfo userInfo;
     private String createdById;
@@ -48,9 +48,9 @@ public class Bid {
         return listingId;
     }
 
-    @DynamoDBAttribute(attributeName = "SpecialInstruction")
-    public String getSpecialInstruction() {
-        return specialInstruction;
+    @DynamoDBAttribute(attributeName = "AdditionalInfo")
+    public String getAdditionalInfo() {
+        return additionalInfo;
     }
 
     public Bid setListingId(String listingId) {
@@ -58,8 +58,8 @@ public class Bid {
         return this;
     }
 
-    public Bid setSpecialInstructions(String specialInstruction) {
-        this.specialInstruction = specialInstruction;
+    public Bid setAdditionalInfo(String additionalInfo) {
+        this.additionalInfo = additionalInfo;
         return this;
     }
 

@@ -31,7 +31,7 @@ public class BidCRUDTest {
 
     private static DynamoDB dynamoDB;
     private static String tableName = "Bid";
-    private BidService service = new BidService();
+    private BidService service = BidService.getInstance();
 
     @BeforeClass
     public static void createTable() {

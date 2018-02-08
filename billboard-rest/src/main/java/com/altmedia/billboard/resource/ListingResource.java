@@ -24,12 +24,14 @@ import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataMultiPart;
 
 import com.altmedia.billboard.entity.Listing;
+import com.altmedia.billboard.service.EmailService;
 import com.altmedia.billboard.service.ListingService;
 
 @Path("listing")
 public class ListingResource {
     private Log LOGGER = LogFactory.getLog(ListingResource.class);
-    private ListingService listingService = new ListingService();
+    private ListingService listingService = ListingService.getInstance();
+    private EmailService emailService = EmailService.getInstance();
 
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
@@ -42,12 +44,14 @@ public class ListingResource {
                 listing.setId(UUID.randomUUID().toString());
                 uploadImagesToS3(imageParts, listing);
                 listingService.create(listing);
+                emailService.sendListingCreatedEmail(listing);
                 return Response.ok().build();
             }
 
         }
         catch (Throwable e) {
-            LOGGER.error("Error creating listing",e);
+            LOGGER.error("Error creating listing", e);
+            return Response.serverError().build();
         }
         return Response.serverError().build();
     }
@@ -65,13 +69,14 @@ public class ListingResource {
 
             }
             listingService.update(listing);
-            return Response.ok().build();
+            emailService.sendListingUpdatedEmail(listing);
 
         }
         catch (Throwable e) {
-            LOGGER.error("Error updating listing",e);
+            LOGGER.error("Error updating listing", e);
+            return Response.serverError().build();
         }
-        return Response.serverError().build();
+        return Response.ok().build();
     }
 
     private void uploadImagesToS3(List<FormDataBodyPart> imageParts, Listing listing) throws Exception, IOException {
@@ -90,7 +95,14 @@ public class ListingResource {
     @DELETE
     @Path("{id}")
     public Response delete(@PathParam("id") String listingId) {
-        listingService.delete(listingId);
+        try {
+            listingService.delete(listingId);
+            emailService.sendListingDeletedEmail(listingService.retrieve(listingId));
+        }
+        catch (Throwable e) {
+            LOGGER.error("Error deleting listing", e);
+            return Response.serverError().build();
+        }
         return Response.ok().build();
     }
 
@@ -107,7 +119,14 @@ public class ListingResource {
     @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllByUserId(@PathParam("userId") String userId) {
-        List<Listing> listings = listingService.getListingsByUserId(userId);
+        List<Listing> listings = null;
+        try {
+            listings = listingService.getListingsByUserId(userId);
+        }
+        catch (Throwable e) {
+            LOGGER.error("Error getAllByUserId", e);
+            return Response.serverError().build();
+        }
         return Response.ok().entity(listings).build();
     }
 
@@ -115,7 +134,14 @@ public class ListingResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response list() {
-        List<Listing> listings = listingService.getAllListings();
+        List<Listing> listings = null;
+        try {
+            listings = listingService.getAllListings();
+        }
+        catch (Throwable e) {
+            LOGGER.error("Error getAllByUserId", e);
+            return Response.serverError().build();
+        }
         return Response.ok().entity(listings).build();
     }
 

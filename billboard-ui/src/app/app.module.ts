@@ -5,20 +5,19 @@ import { HttpClientModule } from '@angular/common/http';
 
 
 import { AppComponent } from './app.component';
-import { ListingsComponent } from './listings/listings.component';
-import { ListingDetailComponent } from './listing-detail/listing-detail.component';
-import { ListingService } from './listing.service';
-import { MessagesComponent } from './messages/messages.component';
-import { MessageService } from './message.service';
-import { AppRoutingModule } from './/app-routing.module';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { ListingSearchComponent } from './listing-search/listing-search.component';
-import { ListingCreateComponent } from './listing-create/listing-create.component';
-import { MyListingsComponent } from './my-listings/my-listings.component';
-import { ListingEditComponent } from './listing-edit/listing-edit.component';
-import { BidService } from './bid.service';
-import { BidDetailComponent } from './bid-detail/bid-detail.component';
-import { MyBidsComponent } from './my-bids/my-bids.component';
+import { ListingsComponent } from './secure/listings/listings.component';
+import { ListingDetailComponent } from './secure/listing-detail/listing-detail.component';
+import { ListingService } from './service/listing.service';
+import { MessagesComponent } from './secure/messages/messages.component';
+import { MessageService } from './service/message.service';
+import { AppRoutingModule } from './app-routing.module';
+import { ListingSearchComponent } from './secure/listing-search/listing-search.component';
+import { ListingCreateComponent } from './secure/listing-create/listing-create.component';
+import { MyListingsComponent } from './secure/my-listings/my-listings.component';
+import { ListingEditComponent } from './secure/listing-edit/listing-edit.component';
+import { BidService } from './service/bid.service';
+import { BidDetailComponent } from './secure/bid-detail/bid-detail.component';
+import { MyBidsComponent } from './secure/my-bids/my-bids.component';
 
 import {AboutComponent, HomeComponent, HomeLandingComponent} from "./public/home.component";
 import {AwsUtil} from "./service/aws.service";
@@ -47,7 +46,6 @@ import {CognitoUtil} from "./service/cognito.service";
     ListingsComponent,
     ListingDetailComponent,
     MessagesComponent,
-    DashboardComponent,
     ListingSearchComponent,
     ListingCreateComponent,
     MyListingsComponent,

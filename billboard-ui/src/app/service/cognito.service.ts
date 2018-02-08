@@ -66,7 +66,6 @@ export class CognitoUtil {
     }
 
     getUserPool() {
-    	console.log(this.role);
     	if(this.role == 'user')
         return new CognitoUserPool(CognitoUtil._POOL_DATA);
     	else if(this.role == 'vendor')

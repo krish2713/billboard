@@ -30,7 +30,7 @@ public class ListingCRUDTest {
 
     private static DynamoDB dynamoDB;
     private static String tableName = "Listing";
-    private ListingService service = new ListingService();
+    private ListingService service = ListingService.getInstance();
 
     @BeforeClass
     public static void createTable() {

@@ -1,0 +1,21 @@
+<h2>Listings</h2>
+
+
+<app-listing-search></app-listing-search>
+
+
+
+
+<ul class="listings">
+	<li *ngFor="let listing of listings"><a
+		routerLink="/securehome/listing-detail/{{listing.id}}"> <img
+			src="{{listing.imageUrls[0]}}" style="width: 48px; height: 30px;">
+			{{listing.title}}
+	</a>
+	<button *ngIf="canEditOrDelete(listing.createdById)" class="edit" title="edit listing"
+			routerLink="/securehome/editListing/{{listing.id}}">edit</button>
+		<button *ngIf="canEditOrDelete(listing.createdById)" class="delete" title="delete listing"
+			(click)="delete(listing)">delete</button></li>
+
+
+</ul>

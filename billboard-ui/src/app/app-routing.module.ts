@@ -1,13 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ListingsComponent }      from './listings/listings.component';
-import { MyListingsComponent }  from './my-listings/my-listings.component';
-import { MyBidsComponent }  from './my-bids/my-bids.component';
-import { DashboardComponent }   from './dashboard/dashboard.component';
-import { ListingDetailComponent }  from './listing-detail/listing-detail.component';
-import { BidDetailComponent }  from './bid-detail/bid-detail.component';
-import { ListingCreateComponent }  from './listing-create/listing-create.component';
-import { ListingEditComponent }  from './listing-edit/listing-edit.component';
+import { ListingsComponent }      from './secure/listings/listings.component';
+import { MyListingsComponent }  from './secure/my-listings/my-listings.component';
+import { MyBidsComponent }  from './secure/my-bids/my-bids.component';
+import { ListingDetailComponent }  from './secure/listing-detail/listing-detail.component';
+import { BidDetailComponent }  from './secure/bid-detail/bid-detail.component';
+import { ListingCreateComponent }  from './secure/listing-create/listing-create.component';
+import { ListingEditComponent }  from './secure/listing-edit/listing-edit.component';
 import {AboutComponent, HomeComponent, HomeLandingComponent} from "./public/home.component";
 import {SecureHomeComponent} from "./secure/landing/securehome.component";
 import {MyProfileComponent} from "./secure/profile/myprofile.component";
@@ -64,7 +63,7 @@ const secureHomeRoutes: Routes = [
                                       { path: 'editListing/:id', component: ListingEditComponent },
                                       { path: 'mybids', component: MyBidsComponent },
                                       { path: 'bid-detail/:id', component: BidDetailComponent },
-                                      {path: '', component: MyProfileComponent}]
+                                      {path: '', component: ListingsComponent}]
                                   }
                               ];
 

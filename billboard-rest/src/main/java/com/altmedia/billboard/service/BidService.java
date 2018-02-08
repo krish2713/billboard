@@ -14,7 +14,13 @@ import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 public class BidService {
     private DynamoDBMapper mapper;
 
-    public BidService() {
+    private static final BidService instance = new BidService();
+
+    public static BidService getInstance() {
+        return instance;
+    }
+
+    private BidService() {
         AmazonDynamoDB client = AmazonDynamoDBClientBuilder.standard().build();
         mapper = new DynamoDBMapper(client);
     }
@@ -28,6 +34,7 @@ public class BidService {
     }
 
     public void update(Bid bid) {
+
         mapper.save(bid);
     }
 
@@ -45,12 +52,12 @@ public class BidService {
         return mapper.scan(Bid.class, queryExpression);
 
     }
-    
+
     public List<Bid> getAllBidsForUserId(String userId) {
         Map<String, AttributeValue> eav = new HashMap<String, AttributeValue>();
         eav.put(":val1", new AttributeValue().withS(userId));
-        DynamoDBScanExpression queryExpression = new DynamoDBScanExpression().withFilterExpression("CreatedById = :val1")
-                .withExpressionAttributeValues(eav);
+        DynamoDBScanExpression queryExpression = new DynamoDBScanExpression()
+                .withFilterExpression("CreatedById = :val1").withExpressionAttributeValues(eav);
         return mapper.scan(Bid.class, queryExpression);
 
     }
