@@ -12,186 +12,188 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 @DynamoDBTable(tableName = "Listing")
 public class Listing {
-    private String id;
-    private String title;
-    private Address address;
-    private int size;
-    private List<URL> imageUrls = new ArrayList<URL>();
-    private Date fromDate;
-    private Date toDate;
-    private int minimumPeriod;
-    private int pricePerMonth;
-    private String createdById;
-    private String modifiedById;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private Date createdDate;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private Date modifiedDate;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private Date startDate;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private Date endDate;
-    private String type;
+	private String id;
+	private String title;
+	private Address address;
+	private int size;
+	private List<URL> imageUrls = new ArrayList<URL>();
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+	private Date fromDate;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+	private Date toDate;
+	private int minimumPeriod;
+	private int pricePerMonth;
+	private String createdById;
+	private String modifiedById;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+	private Date createdDate;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+	private Date modifiedDate;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+	private Date startDate;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+	private Date endDate;
+	private String type;
 
-    // Partition key
-    @DynamoDBHashKey(attributeName = "Id")
-    public String getId() {
-        return id;
-    }
+	// Partition key
+	@DynamoDBHashKey(attributeName = "Id")
+	public String getId() {
+		return id;
+	}
 
-    @DynamoDBAttribute(attributeName = "title")
-    public String getTitle() {
-        return title;
-    }
+	@DynamoDBAttribute(attributeName = "title")
+	public String getTitle() {
+		return title;
+	}
 
-    @DynamoDBAttribute(attributeName = "FromDate")
-    Date getFromDate() {
-        return fromDate;
-    }
+	@DynamoDBAttribute(attributeName = "FromDate")
+	Date getFromDate() {
+		return fromDate;
+	}
 
-    @DynamoDBAttribute(attributeName = "ToDate")
-    public Date getToDate() {
-        return toDate;
-    }
+	@DynamoDBAttribute(attributeName = "ToDate")
+	public Date getToDate() {
+		return toDate;
+	}
 
-    @DynamoDBAttribute(attributeName = "MinimumPeriod")
-    public int getMinimumPeriod() {
-        return minimumPeriod;
-    }
+	@DynamoDBAttribute(attributeName = "MinimumPeriod")
+	public int getMinimumPeriod() {
+		return minimumPeriod;
+	}
 
-    @DynamoDBAttribute(attributeName = "PricePerMonth")
-    public int getPricePerMonth() {
-        return pricePerMonth;
-    }
+	@DynamoDBAttribute(attributeName = "PricePerMonth")
+	public int getPricePerMonth() {
+		return pricePerMonth;
+	}
 
-    @DynamoDBAttribute(attributeName = "CreatedById")
-    public String getCreatedById() {
-        return createdById;
-    }
+	@DynamoDBAttribute(attributeName = "CreatedById")
+	public String getCreatedById() {
+		return createdById;
+	}
 
-    @DynamoDBAttribute(attributeName = "ModifiedById")
-    public String getModifiedById() {
-        return modifiedById;
-    }
+	@DynamoDBAttribute(attributeName = "ModifiedById")
+	public String getModifiedById() {
+		return modifiedById;
+	}
 
-    @DynamoDBAttribute(attributeName = "CreatedDate")
-    public Date getCreatedDate() {
-        return createdDate;
-    }
+	@DynamoDBAttribute(attributeName = "CreatedDate")
+	public Date getCreatedDate() {
+		return createdDate;
+	}
 
-    @DynamoDBAttribute(attributeName = "ModifiedDate")
-    public Date getModifiedDate() {
-        return modifiedDate;
-    }
+	@DynamoDBAttribute(attributeName = "ModifiedDate")
+	public Date getModifiedDate() {
+		return modifiedDate;
+	}
 
-    public Listing setId(String id) {
-        this.id = id;
-        return this;
-    }
+	public Listing setId(String id) {
+		this.id = id;
+		return this;
+	}
 
-    public Listing setFromDate(Date fromDate) {
-        this.fromDate = fromDate;
-        return this;
-    }
+	public Listing setFromDate(Date fromDate) {
+		this.fromDate = fromDate;
+		return this;
+	}
 
-    public Listing setToDate(Date toDate) {
-        this.toDate = toDate;
-        return this;
-    }
+	public Listing setToDate(Date toDate) {
+		this.toDate = toDate;
+		return this;
+	}
 
-    public Listing setMinimumPeriod(int minimumPeriod) {
-        this.minimumPeriod = minimumPeriod;
-        return this;
-    }
+	public Listing setMinimumPeriod(int minimumPeriod) {
+		this.minimumPeriod = minimumPeriod;
+		return this;
+	}
 
-    public Listing setPricePerMonth(int pricePerMonth) {
-        this.pricePerMonth = pricePerMonth;
-        return this;
-    }
+	public Listing setPricePerMonth(int pricePerMonth) {
+		this.pricePerMonth = pricePerMonth;
+		return this;
+	}
 
-    public Listing setCreatedById(String createdById) {
-        this.createdById = createdById;
-        return this;
-    }
+	public Listing setCreatedById(String createdById) {
+		this.createdById = createdById;
+		return this;
+	}
 
-    public Listing setModifiedById(String modifiedById) {
-        this.modifiedById = modifiedById;
-        return this;
-    }
+	public Listing setModifiedById(String modifiedById) {
+		this.modifiedById = modifiedById;
+		return this;
+	}
 
-    public Listing setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
-        return this;
-    }
+	public Listing setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+		return this;
+	}
 
-    public Listing setModifiedDate(Date modifiedDate) {
-        this.modifiedDate = modifiedDate;
-        return this;
-    }
+	public Listing setModifiedDate(Date modifiedDate) {
+		this.modifiedDate = modifiedDate;
+		return this;
+	}
 
-    @DynamoDBAttribute(attributeName = "Type")
-    public String getType() {
-        return type;
-    }
+	@DynamoDBAttribute(attributeName = "Type")
+	public String getType() {
+		return type;
+	}
 
-    public Listing setType(String type) {
-        this.type = type;
-        return this;
-    }
+	public Listing setType(String type) {
+		this.type = type;
+		return this;
+	}
 
-    @DynamoDBAttribute(attributeName = "StartDate")
-    public Date getStartDate() {
-        return startDate;
-    }
+	@DynamoDBAttribute(attributeName = "StartDate")
+	public Date getStartDate() {
+		return startDate;
+	}
 
-    @DynamoDBAttribute(attributeName = "EndDate")
-    public Date getEndDate() {
-        return endDate;
-    }
+	@DynamoDBAttribute(attributeName = "EndDate")
+	public Date getEndDate() {
+		return endDate;
+	}
 
-    public Listing setStartDate(Date startDate) {
-        this.startDate = startDate;
-        return this;
-    }
+	public Listing setStartDate(Date startDate) {
+		this.startDate = startDate;
+		return this;
+	}
 
-    public Listing setEndDate(Date endDate) {
-        this.endDate = endDate;
-        return this;
-    }
+	public Listing setEndDate(Date endDate) {
+		this.endDate = endDate;
+		return this;
+	}
 
-    @DynamoDBAttribute(attributeName = "Address")
-    public Address getAddress() {
-        return address;
-    }
+	@DynamoDBAttribute(attributeName = "Address")
+	public Address getAddress() {
+		return address;
+	}
 
-    @DynamoDBAttribute(attributeName = "Size")
-    public int getSize() {
-        return size;
-    }
+	@DynamoDBAttribute(attributeName = "Size")
+	public int getSize() {
+		return size;
+	}
 
-    @DynamoDBAttribute(attributeName = "ImageUrls")
-    public List<URL> getImageUrls() {
-        return imageUrls;
-    }
+	@DynamoDBAttribute(attributeName = "ImageUrls")
+	public List<URL> getImageUrls() {
+		return imageUrls;
+	}
 
-    public Listing setAddress(Address address) {
-        this.address = address;
-        return this;
-    }
+	public Listing setAddress(Address address) {
+		this.address = address;
+		return this;
+	}
 
-    public Listing setSize(int size) {
-        this.size = size;
-        return this;
-    }
+	public Listing setSize(int size) {
+		this.size = size;
+		return this;
+	}
 
-    public Listing setImageUrls(List<URL> imageUrls) {
-        this.imageUrls = imageUrls;
-        return this;
-    }
+	public Listing setImageUrls(List<URL> imageUrls) {
+		this.imageUrls = imageUrls;
+		return this;
+	}
 
-    public Listing setTitle(String title) {
-        this.title = title;
-        return this;
-    }
+	public Listing setTitle(String title) {
+		this.title = title;
+		return this;
+	}
 
 }

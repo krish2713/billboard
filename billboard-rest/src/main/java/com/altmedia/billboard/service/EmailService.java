@@ -38,7 +38,7 @@ public class EmailService {
 
     private AmazonSimpleEmailService client;
 
-    private static final String FROM = "no-reply@altmedia.com";
+    private static final String FROM = "krish2713@gmail.com";
 
     private ObjectMapper mapper;
 
@@ -124,7 +124,7 @@ public class EmailService {
     public void sendBidCreatedEmail(Bid bid, String vendorId) throws JsonProcessingException {
         List<String> toEmailAddress = credentialService.getAdminEmailIds();
         String vendorEmail = credentialService.getVendorEmailId(vendorId);
-        String bidderEmail = credentialService.getVendorEmailId(bid.getCreatedById());
+        String bidderEmail = credentialService.getUserEmailId(bid.getCreatedById());
 
         // Construct an object to contain the recipient address.
         Destination destination = new Destination().withToAddresses(bidderEmail).withCcAddresses(vendorEmail)

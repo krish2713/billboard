@@ -8,70 +8,84 @@ import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProviderClientBuilder
 import com.amazonaws.services.cognitoidp.model.AdminGetUserRequest;
 import com.amazonaws.services.cognitoidp.model.AdminGetUserResult;
 import com.amazonaws.services.cognitoidp.model.AttributeType;
-import com.amazonaws.services.cognitoidp.model.GetUserRequest;
 import com.amazonaws.services.cognitoidp.model.ListUsersRequest;
 import com.amazonaws.services.cognitoidp.model.ListUsersResult;
 import com.amazonaws.services.cognitoidp.model.UserType;
 
 public class CredentialService {
-    private static final String EMAIL = "email";
-    private static final String ADMIN_USER_POOL = "us-east-1_yWH7NZ2HF";
-    private static final String VENDOR_USER_POOL = "us-east-1_nUNrP1phs";
-    private AWSCognitoIdentityProvider identityClient;
-    private String adminUserPoolId;
-    private String vendorUserPoolId;
-    
-    private static final CredentialService instance = new CredentialService();
+	private static final String EMAIL = "email";
+	private static final String ADMIN_USER_POOL = "us-east-1_yWH7NZ2HF";
+	private static final String VENDOR_USER_POOL = "us-east-1_nUNrP1phs";
+	private static final String USER_POOL = "us-east-1_gTbweKvlb";
+	private AWSCognitoIdentityProvider identityClient;
+	private String adminUserPoolId;
+	private String vendorUserPoolId;
+	private String userPoolId;
 
-    public static CredentialService getInstance() {
-        return instance;
-    }
+	private static final CredentialService instance = new CredentialService();
 
-    private CredentialService() {
-        identityClient = AWSCognitoIdentityProviderClientBuilder.defaultClient();
-        adminUserPoolId = System.getenv("ADMIN_USER_POOL") != null ? System.getenv("ADMIN_USER_POOL") : ADMIN_USER_POOL;
-        vendorUserPoolId = System.getenv("VENDOR_USER_POOL") != null ? System.getenv("VENDOR_USER_POOL")
-                : VENDOR_USER_POOL;
-    }
+	public static CredentialService getInstance() {
+		return instance;
+	}
 
-    public List<String> getAdminEmailIds() {
-        List<String> adminEmailIds = new ArrayList<String>();
-        ListUsersRequest listUserRequest = new ListUsersRequest().withUserPoolId(adminUserPoolId);
-        ListUsersResult result = identityClient.listUsers(listUserRequest);
-        if (result != null) {
-            List<UserType> users = result.getUsers();
-            for (UserType user : users) {
-                List<AttributeType> attrs = user.getAttributes();
-                String email = getEmail(attrs);
-                if (email != null) {
-                    adminEmailIds.add(email);
-                }
-            }
-        }
-        return adminEmailIds;
-    }
+	private CredentialService() {
+		identityClient = AWSCognitoIdentityProviderClientBuilder.defaultClient();
+		adminUserPoolId = System.getenv("ADMIN_USER_POOL") != null ? System.getenv("ADMIN_USER_POOL") : ADMIN_USER_POOL;
+		vendorUserPoolId = System.getenv("VENDOR_USER_POOL") != null ? System.getenv("VENDOR_USER_POOL")
+				: VENDOR_USER_POOL;
+		userPoolId = System.getenv("USER_POOL") != null ? System.getenv("USER_POOL") : USER_POOL;
+	}
 
-    public String getVendorEmailId(String username) {
-        AdminGetUserRequest getUserRequest = new AdminGetUserRequest().withUsername(username)
-                .withUserPoolId(vendorUserPoolId);
-        AdminGetUserResult user = identityClient.adminGetUser(getUserRequest);
-        if (user != null) {
-            List<AttributeType> attrs = user.getUserAttributes();
-            return getEmail(attrs);
+	public List<String> getAdminEmailIds() {
+		List<String> adminEmailIds = new ArrayList<String>();
+		ListUsersRequest listUserRequest = new ListUsersRequest().withUserPoolId(adminUserPoolId);
+		ListUsersResult result = identityClient.listUsers(listUserRequest);
+		if (result != null) {
+			List<UserType> users = result.getUsers();
+			for (UserType user : users) {
+				List<AttributeType> attrs = user.getAttributes();
+				String email = getEmail(attrs);
+				if (email != null) {
+					adminEmailIds.add(email);
+				}
+			}
+		}
+		return adminEmailIds;
+	}
 
-        }
-        return null;
+	public String getVendorEmailId(String username) {
+		AdminGetUserRequest getUserRequest = new AdminGetUserRequest().withUsername(username)
+				.withUserPoolId(vendorUserPoolId);
+		AdminGetUserResult user = identityClient.adminGetUser(getUserRequest);
+		if (user != null) {
+			List<AttributeType> attrs = user.getUserAttributes();
+			return getEmail(attrs);
 
-    }
+		}
+		return null;
 
-    private String getEmail(List<AttributeType> attrs) {
-        for (AttributeType type : attrs) {
-            if (type.getName().equals(EMAIL)) {
-                return type.getValue();
-            }
+	}
 
-        }
-        return null;
-    }
+	private String getEmail(List<AttributeType> attrs) {
+		for (AttributeType type : attrs) {
+			if (type.getName().equals(EMAIL)) {
+				return type.getValue();
+			}
+
+		}
+		return null;
+	}
+
+	public String getUserEmailId(String username) {
+		AdminGetUserRequest getUserRequest = new AdminGetUserRequest().withUsername(username)
+				.withUserPoolId(userPoolId);
+		AdminGetUserResult user = identityClient.adminGetUser(getUserRequest);
+		if (user != null) {
+			List<AttributeType> attrs = user.getUserAttributes();
+			return getEmail(attrs);
+
+		}
+		return null;
+	}
 
 }

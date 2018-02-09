@@ -12,6 +12,8 @@ export class Listing {
   endDate: Date;
   type:string;
   createdById:string;
-  updatedById:string;
+  createdDate:Date;
+  modifiedById:string;
+  modifiedDate:Date;
   imageUrls:string[];
 }

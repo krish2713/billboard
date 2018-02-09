@@ -36,7 +36,8 @@ export class ListingEditComponent implements OnInit {
 	  
 	  save(): void {
 		  let username = this.cognitoUtil.getCurrentUser().getUsername();
-		  this.listing.updatedById = username;
+		  this.listing.modifiedById = username;
+		  this.listing.modifiedDate = new Date();
 		   this.listingService.updateListing(this.listing,this.images)
 		     .subscribe(() => this.goBack());
 		 }

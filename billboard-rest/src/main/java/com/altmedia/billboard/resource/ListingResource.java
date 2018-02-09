@@ -29,126 +29,121 @@ import com.altmedia.billboard.service.ListingService;
 
 @Path("listing")
 public class ListingResource {
-    private Log LOGGER = LogFactory.getLog(ListingResource.class);
-    private ListingService listingService = ListingService.getInstance();
-    private EmailService emailService = EmailService.getInstance();
+	private Log LOGGER = LogFactory.getLog(ListingResource.class);
+	private ListingService listingService = ListingService.getInstance();
+	private EmailService emailService = EmailService.getInstance();
 
-    @POST
-    @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public Response create(final FormDataMultiPart multiPart) {
-        try {
-            List<FormDataBodyPart> imageParts = multiPart.getFields("images");
-            FormDataBodyPart listingPart = multiPart.getField("listing");
-            Listing listing = listingPart.getEntityAs(Listing.class);
-            if (imageParts != null) {
-                listing.setId(UUID.randomUUID().toString());
-                uploadImagesToS3(imageParts, listing);
-                listingService.create(listing);
-                emailService.sendListingCreatedEmail(listing);
-                return Response.ok().build();
-            }
+	@POST
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	public Response create(final FormDataMultiPart multiPart) {
+		try {
+			List<FormDataBodyPart> imageParts = multiPart.getFields("images");
+			FormDataBodyPart listingPart = multiPart.getField("listing");
+			Listing listing = listingPart.getEntityAs(Listing.class);
+			listing.setId(UUID.randomUUID().toString());
+			if (imageParts != null) {
+				uploadImagesToS3(imageParts, listing);
+			}
+			listingService.create(listing);
+			emailService.sendListingCreatedEmail(listing);
 
-        }
-        catch (Throwable e) {
-            LOGGER.error("Error creating listing", e);
-            return Response.serverError().build();
-        }
-        return Response.serverError().build();
-    }
+		} catch (Throwable e) {
+			LOGGER.error("Error creating listing", e);
+			return Response.serverError().build();
+		}
+		return Response.ok().build();
+	}
 
-    @PUT
-    @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public Response update(final FormDataMultiPart multiPart) {
-        try {
-            List<FormDataBodyPart> imageParts = multiPart.getFields("images");
-            FormDataBodyPart listingPart = multiPart.getField("listing");
-            Listing listing = listingPart.getEntityAs(Listing.class);
-            if (imageParts != null) {
-                listing.getImageUrls().clear();
-                uploadImagesToS3(imageParts, listing);
+	@PUT
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	public Response update(final FormDataMultiPart multiPart) {
+		try {
+			List<FormDataBodyPart> imageParts = multiPart.getFields("images");
+			FormDataBodyPart listingPart = multiPart.getField("listing");
+			Listing listing = listingPart.getEntityAs(Listing.class);
+			if (imageParts != null) {
+				listing.getImageUrls().clear();
+				uploadImagesToS3(imageParts, listing);
 
-            }
-            listingService.update(listing);
-            emailService.sendListingUpdatedEmail(listing);
+			}
+			listingService.update(listing);
+			emailService.sendListingUpdatedEmail(listing);
 
-        }
-        catch (Throwable e) {
-            LOGGER.error("Error updating listing", e);
-            return Response.serverError().build();
-        }
-        return Response.ok().build();
-    }
+		} catch (Throwable e) {
+			LOGGER.error("Error updating listing", e);
+			return Response.serverError().build();
+		}
+		return Response.ok().build();
+	}
 
-    private void uploadImagesToS3(List<FormDataBodyPart> imageParts, Listing listing) throws Exception, IOException {
-        if (imageParts.size() > 4) {
-            throw new Exception("too many images!");
-        }
-        int i = 0;
-        for (FormDataBodyPart part : imageParts) {
-            InputStream is = part.getEntityAs(InputStream.class);
-            ContentDisposition meta = part.getContentDisposition();
-            URL url = listingService.storeImageInS3(is, meta.getFileName(), listing.getId());;
-            listing.getImageUrls().add(i++, url);
-        }
-    }
+	private void uploadImagesToS3(List<FormDataBodyPart> imageParts, Listing listing) throws Exception, IOException {
+		if (imageParts.size() > 4) {
+			throw new Exception("too many images!");
+		}
+		int i = 0;
+		for (FormDataBodyPart part : imageParts) {
+			InputStream is = part.getEntityAs(InputStream.class);
+			ContentDisposition meta = part.getContentDisposition();
+			URL url = listingService.storeImageInS3(is, meta.getFileName(), listing.getId());
+			;
+			listing.getImageUrls().add(i++, url);
+		}
+	}
 
-    @DELETE
-    @Path("{id}")
-    public Response delete(@PathParam("id") String listingId) {
-        try {
-            listingService.delete(listingId);
-            emailService.sendListingDeletedEmail(listingService.retrieve(listingId));
-        }
-        catch (Throwable e) {
-            LOGGER.error("Error deleting listing", e);
-            return Response.serverError().build();
-        }
-        return Response.ok().build();
-    }
+	@DELETE
+	@Path("{id}")
+	public Response delete(@PathParam("id") String listingId) {
+		try {
+			listingService.delete(listingId);
+			emailService.sendListingDeletedEmail(listingService.retrieve(listingId));
+		} catch (Throwable e) {
+			LOGGER.error("Error deleting listing", e);
+			return Response.serverError().build();
+		}
+		return Response.ok().build();
+	}
 
-    @GET
-    @Path("{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response get(@PathParam("id") String listingId) {
-        Listing listing = listingService.retrieve(listingId);
-        return Response.ok().entity(listing).build();
-    }
+	@GET
+	@Path("{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response get(@PathParam("id") String listingId) {
+		Listing listing = listingService.retrieve(listingId);
+		return Response.ok().entity(listing).build();
+	}
 
-    @Path("user/{userId}")
-    @GET
-    @Consumes(MediaType.TEXT_PLAIN)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllByUserId(@PathParam("userId") String userId) {
-        List<Listing> listings = null;
-        try {
-            listings = listingService.getListingsByUserId(userId);
-        }
-        catch (Throwable e) {
-            LOGGER.error("Error getAllByUserId", e);
-            return Response.serverError().build();
-        }
-        return Response.ok().entity(listings).build();
-    }
+	@Path("user/{userId}")
+	@GET
+	@Consumes(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAllByUserId(@PathParam("userId") String userId) {
+		List<Listing> listings = null;
+		try {
+			listings = listingService.getListingsByUserId(userId);
+		} catch (Throwable e) {
+			LOGGER.error("Error getAllByUserId", e);
+			return Response.serverError().build();
+		}
+		return Response.ok().entity(listings).build();
+	}
 
-    @Path("list")
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response list() {
-        List<Listing> listings = null;
-        try {
-            listings = listingService.getAllListings();
-        }
-        catch (Throwable e) {
-            LOGGER.error("Error getAllByUserId", e);
-            return Response.serverError().build();
-        }
-        return Response.ok().entity(listings).build();
-    }
+	@Path("list")
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response list() {
+		List<Listing> listings = null;
+		try {
+			listings = listingService.getAllListings();
+		} catch (Throwable e) {
+			LOGGER.error("Error getAllByUserId", e);
+			return Response.serverError().build();
+		}
+		return Response.ok().entity(listings).build();
+	}
 
-    @Path("ping")
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public Response ping() {
-        return Response.ok().entity("hello user!").build();
-    }
+	@Path("ping")
+	@GET
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response ping() {
+		return Response.ok().entity("hello user!").build();
+	}
 }

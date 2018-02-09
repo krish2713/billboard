@@ -27,6 +27,7 @@ export class ListingCreateComponent implements OnInit {
   create(): void {
 	  let username = this.cognitoUtil.getCurrentUser().getUsername();
 	  this.listing.createdById = username;
+	  this.listing.createdDate = new Date();
 	   this.listingService.addListing(this.listing,this.images)
 	     .subscribe(() => this.goBack());
 	 }
