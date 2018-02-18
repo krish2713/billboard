@@ -1,17 +1,17 @@
 export const environment = {
     production: false,
 
-    region: 'us-east-1',
+    region: 'us-east-2',
 
     identityPoolId: '',
-    userPoolId: 'us-east-1_gTbweKvlb',
-    clientId: '7dd8k5guk5g6hnvmjd49iq8nc8',
+    userPoolId: 'us-east-2_H9Fkk0ebH',
+    clientId: '7n0qtlekinqldp0mrnhueobjr7',
     
-    vendorPoolId: 'us-east-1_nUNrP1phs',
-    vendorClientId: '294bjh1lv6fq9driotqtbp31dv',
+    vendorPoolId: 'us-east-2_SWy1QxBTP',
+    vendorClientId: '2d05su7pka0824u6p35rl2dl88',
     
-    adminPoolId: 'us-east-1_yWH7NZ2HF',
-    adminClientId: '499sdogqk1cua5sulnjd8i91au',
+    adminPoolId: 'us-east-2_OtqLwFZBG',
+    adminClientId: '2k79tm47gg2hqhf0hohknl31dm',
 
     rekognitionBucket: 'rekognition-pics',
     albumName: "usercontent",

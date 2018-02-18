@@ -25,7 +25,7 @@ export class ListingsComponent implements OnInit {
  
  canEditOrDelete(userId: string){
 	 let username = this.cognitoUtil.getCurrentUser().getUsername();
-	 return this.cognitoUtil.getRole() =='admin'||(userId==username);
+	 return this.cognitoUtil.getRole() =='admin'||( this.cognitoUtil.getRole() =='vendor' && userId==username);
 
 	} 
  

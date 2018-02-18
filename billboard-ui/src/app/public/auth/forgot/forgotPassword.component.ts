@@ -70,7 +70,7 @@ export class ForgotPassword2Component implements CognitoCallback, OnInit, OnDest
             this.errorMessage = message;
             console.log("result: " + this.errorMessage);
         } else { //success
-            this.router.navigate(['/home/login']);
+            this.router.navigate(['/home']);
         }
     }
 
