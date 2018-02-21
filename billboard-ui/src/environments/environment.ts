@@ -4,14 +4,14 @@ export const environment = {
     region: 'us-east-2',
 
     identityPoolId: '',
-    userPoolId: 'us-east-2_H9Fkk0ebH',
-    clientId: '7n0qtlekinqldp0mrnhueobjr7',
+    userPoolId: 'us-east-1_LUaZKjxVR',
+    clientId: '5bf41upmutnfj6bejuvmt2k5pk',
     
-    vendorPoolId: 'us-east-2_SWy1QxBTP',
-    vendorClientId: '2d05su7pka0824u6p35rl2dl88',
+    vendorPoolId: 'us-east-1_D6EpURyFi',
+    vendorClientId: 'bvs4ci30hj6dpsje4u2a8bmrm',
     
-    adminPoolId: 'us-east-2_OtqLwFZBG',
-    adminClientId: '2k79tm47gg2hqhf0hohknl31dm',
+    adminPoolId: 'us-east-1_D6EpURyFi',
+    adminClientId: 'bvs4ci30hj6dpsje4u2a8bmrm',
 
     rekognitionBucket: 'rekognition-pics',
     albumName: "usercontent",

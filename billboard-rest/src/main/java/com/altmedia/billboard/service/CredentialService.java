@@ -14,9 +14,9 @@ import com.amazonaws.services.cognitoidp.model.UserType;
 
 public class CredentialService {
 	private static final String EMAIL = "email";
-	private static final String ADMIN_USER_POOL = "us-east-2_OtqLwFZBG";
-	private static final String VENDOR_USER_POOL = "us-east-2_SWy1QxBTP";
-	private static final String USER_POOL = "us-east-2_H9Fkk0ebH";
+	private static final String ADMIN_USER_POOL = "us-east-1_L0KX3HDGw";
+	private static final String VENDOR_USER_POOL = "us-east-1_D6EpURyFi";
+	private static final String USER_POOL = "us-east-1_LUaZKjxVR";
 	private AWSCognitoIdentityProvider identityClient;
 	private String adminUserPoolId;
 	private String vendorUserPoolId;
